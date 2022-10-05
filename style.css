@@ -1,0 +1,85 @@
+:root {
+--main-color: ;
+--secondary-color: ;
+--background--color: #8d99ae;
+--text-color: #023047;
+--alert-color: #8ecae6;
+}
+
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator-body {
+    height: 600px;
+    width: 400px;
+    background-color: var(--background--color);
+    border-radius: 15px;
+}
+
+.calculator-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.calculator-screen {
+    margin-top: 20px;
+    height: 90px;
+    width: 90%;
+    background-color: white;
+    text-align: right;
+    padding:  20px 5px;
+    font-size: 3rem;
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+    gap: 30px;
+}
+
+.first-row-buttons {
+    margin-top: 80px;
+}
+
+.button {
+    border: solid 1px black;
+    color: var(--text-color);
+    background-color: #edf2f4;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px black;
+    width: 70px;
+    height: 60px;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 1.5rem;
+}
+
+.button:active {
+    box-shadow: 4px 2px 2px black;
+    transition: box-shadow 0.05s linear;
+}
+
+.operator {
+    background-color: #d90429;
+}
+
+.clear {
+    background-color: purple;
+}
+
+.equals {
+    background-color: greenyellow;
+}
