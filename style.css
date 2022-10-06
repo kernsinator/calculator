@@ -21,7 +21,7 @@ body {
 }
 
 .calculator-body {
-    height: 600px;
+    height: 650px;
     width: 400px;
     background-color: var(--background--color);
     border-radius: 15px;
@@ -82,4 +82,6 @@ body {
 
 .equals {
     background-color: greenyellow;
+    margin-top: 20px;
+    width: 80%;
 }

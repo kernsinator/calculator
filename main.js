@@ -46,6 +46,11 @@ function handleButtonClick(e) {
         operator = button;
         handleOperator(+displayValue);
     } 
+    else if (button === '.') {
+        if (!displayValue.includes('.')) {
+            displayValue = displayValue.concat(button);
+        }
+    }
     else if (button === '=') {
         if(!displayValue) {
             drawScreen('Missed button!');
