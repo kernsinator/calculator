@@ -3,7 +3,8 @@ let firstOperand = "";
 let secondOperand = "";
 let solution;
 let operator;
-let isFirstPass = true;
+let previousOperator;
+let haveAlreadyCalculated = false;
 
 function add(a, b) {
     return a + b;
@@ -34,17 +35,30 @@ function handleButtonClick(e) {
         clearValues();
     } 
     else if (typeof(+button) === 'number' && !isNaN(+button)) {
+        if (solution) {
+            solution = '';
+            displayValue = '';
+        }
         displayValue = displayValue.concat(button);
     } 
     else if (operators.includes(button)) {
+        previousOperator = operator;
         operator = button;
         handleOperator(+displayValue);
-        displayValue = '';
-        
     } 
     else if (button === '=') {
+        if(!displayValue) {
+            drawScreen('Missed button!');
+            return;
+        }
         secondOperand = +displayValue;
-        displayValue = operate(operator, firstOperand, secondOperand);
+        solution = operate(operator, firstOperand, secondOperand);
+        firstOperand = solution;
+        displayValue = solution;
+        secondOperand = '';
+        previousOperator = '';
+        haveAlreadyCalculated = true;
+        
     }
     
     drawScreen(`${displayValue}`);
@@ -52,11 +66,20 @@ function handleButtonClick(e) {
 }
 
 function handleOperator(value) {
-    if (isFirstPass) {
+    if (haveAlreadyCalculated) {
+        haveAlreadyCalculated = false;
+        displayValue = '';
+    } else if (!firstOperand) {
         firstOperand = value;
-        isFirstPass = false;
-    } else {
-        secondOperand = value;
+        displayValue = '';
+    } else if (firstOperand && previousOperator) {
+        solution = operate(previousOperator, +firstOperand, +displayValue)
+        firstOperand = solution;
+        displayValue = `${solution}`;
+    } else if (firstOperand) {
+        solution = operate(operator, +firstOperand, +displayValue)
+        firstOperand = solution;
+        displayValue = `${solution}`;
     }
 }
 
@@ -65,21 +88,32 @@ function clearValues() {
     secondOperand = "";
     solution = "";
     operator = "";
-    isFirstPass = true;
+    haveAlreadyCalculated = false;
+    previousOperator = "";
 }
 
 function operate(operator, a, b) {
     switch(operator) {
         case '+':
-            return add(a, b);
+            result = add(a, b);
+            break;
         case '-':
-            return subtract(a, b);
-        case '*':
-            return multiply(a, b);
-        case '/':
-            return divide(a, b);
+            result = subtract(a, b);
+            break;
 
+        case '*':
+            result = multiply(a, b);
+            break;
+
+        case '/':
+            if(b === 0) {
+                clearValues();
+                return "Can't divide by 0"
+            }
+            result = divide(a, b);
+            break;
     }
+    return Math.round(result * 100) / 100
 }
 
 
